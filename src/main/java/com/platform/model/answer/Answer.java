@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.platform.model.Question;
+import com.platform.model.main.Question;
 
 @Entity
 @Table(name = "answers")
