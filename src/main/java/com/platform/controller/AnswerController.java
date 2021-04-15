@@ -29,7 +29,7 @@ public class AnswerController {
 	QuestionService questionService;
 
 	@PostMapping("/question/{questionId}/answer")
-	public ResponseEntity<Map<String,Object>> createOrUpdateStudent(@PathVariable Long questionId,
+	public ResponseEntity<Map<String,Object>> addAnswer(@PathVariable Long questionId,
 			@Valid @RequestBody Answer answer) {
 
 		try {
