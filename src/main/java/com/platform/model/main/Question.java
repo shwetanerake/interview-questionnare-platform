@@ -1,5 +1,6 @@
 package com.platform.model.main;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,11 +15,18 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.platform.model.answer.Answer;
 
 @Entity
 @Table(name = "questions")
-public class Question {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+public class Question implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "question_id")
@@ -31,7 +39,7 @@ public class Question {
 	private String questionText;
 
 	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL,  orphanRemoval = true)
     private Set<Answer> answers;
 
 	public Long getQuestionId() {
