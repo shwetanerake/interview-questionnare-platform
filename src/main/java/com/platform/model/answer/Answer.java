@@ -18,7 +18,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.platform.model.main.Question;
 
@@ -45,7 +44,7 @@ public class Answer implements Serializable {
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_id"), name = "question_id", nullable = false)
-	@JsonIgnore
+	//@JsonIgnore
 	private Question question;
 
 	@Override

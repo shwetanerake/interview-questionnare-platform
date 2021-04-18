@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.platform.handle.api.error.ApiResponseStatus;
 import com.platform.model.answer.Answer;
 import com.platform.service.AnswerService;
 import com.platform.service.QuestionService;
@@ -29,20 +30,22 @@ public class AnswerController {
 	QuestionService questionService;
 
 	@PostMapping("/question/{questionId}/answer")
-	public ResponseEntity<Map<String,Object>> addAnswer(@PathVariable Long questionId,
-			@Valid @RequestBody Answer answer) {
-
+	public ResponseEntity<ApiResponseStatus> addAnswer(@PathVariable Long questionId, @Valid @RequestBody Answer answer) {
+		
 		try {
-		    answer.setQuestion(questionService.findById(questionId));
-			Map<String, Object> responseMap = Utility.buildResponseMap("success", 0, "answer_id",
-					answerService.createOrUpdate(answer));
-			return new ResponseEntity<Map<String,Object>>(responseMap, HttpStatus.OK);
+			answer.setQuestion(questionService.findById(questionId));
 
-		} catch (Exception e) {
+			final Long answerId = answerService.createOrUpdate(answer);
+
+			final Map<String, Object> resultMap = Utility.buildResultMap("answer_id", answerId);
+
+			return new ResponseEntity<ApiResponseStatus>(new ApiResponseStatus(resultMap), HttpStatus.OK);
+
+		} catch (Exception exception) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Map<String, Object> responseMap = Utility.buildErrorResponseMap(e.getMessage().toString(), -1);
-			return new ResponseEntity<Map<String,Object>>(responseMap, HttpStatus.INTERNAL_SERVER_ERROR);
+			exception.printStackTrace();
+			return new ResponseEntity<ApiResponseStatus>(new ApiResponseStatus(-1, "Exception Occured, Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR,  exception),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 
