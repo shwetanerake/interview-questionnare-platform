@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.platform.model.main.Question;
+import com.platform.model.user.social.profile.ActionEntity;
 
 @Entity
 @Table(name = "answers")
@@ -58,6 +59,19 @@ public class Answer implements Serializable {
 
 	@OneToMany(mappedBy = "answer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<AnswerComment> answerComments;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_profile"), name = "profile_id", nullable = false)
+	private ActionEntity profile;
+	
+
+	public ActionEntity getProfile() {
+		return profile;
+	}
+
+	public void setProfile(ActionEntity profile) {
+		this.profile = profile;
+	}
 
 	public Long getAnswerId() {
 		return answerId;

@@ -10,18 +10,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.NaturalId;
 
 import com.platform.model.main.Question;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @Entity
-@Table(name = "tags")
+@Table(name = "tags", uniqueConstraints = { @UniqueConstraint(name = "tag_name_constraint", columnNames = { "name" }) })
+@Getter
+@Setter
 public class Tag {
 
 	@Id
@@ -30,10 +34,14 @@ public class Tag {
 	private Long tagId;
 
 	@NotNull
-	@Column(name = "name",nullable = false, unique = true)
+	@NotEmpty
+	@Column(name = "name", nullable = false, unique = true)
 	@Size(max = 100)
-	@NaturalId
 	private String name;
+	
+
+	@Column(nullable = true, name = "description")
+	private String description;
 
 	@ManyToMany(mappedBy = "tags")
 	private Set<Question> questions = new HashSet<>();

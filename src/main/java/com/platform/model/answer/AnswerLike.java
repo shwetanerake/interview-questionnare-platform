@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.platform.model.user.User;
+
 @Entity
 @Table(name = "answer_likes")
 public class AnswerLike {
@@ -19,7 +21,12 @@ public class AnswerLike {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long answerLikeId;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_likes_answer_id"), name = "answer_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_likes_answers"), name = "answer_id", nullable = true)
 	private Answer answer;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_likes_users"), name = "user_id", nullable = true)
+	private User user;
+	
 }
