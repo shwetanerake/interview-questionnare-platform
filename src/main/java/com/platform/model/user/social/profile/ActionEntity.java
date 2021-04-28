@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.platform.model.answer.Answer;
+import com.platform.model.main.Question;
+
 @Entity
 @Table(name = "action_entity")
 public class ActionEntity implements Serializable {
@@ -21,15 +24,54 @@ public class ActionEntity implements Serializable {
 	private static final long serialVersionUID = -1046633986402516587L;
 
 	@Id
-	@Column(name = "action_id")
+	@Column(unique = true, name = "action_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long actionId;
 
-	@OneToOne(targetEntity = LikedEntity.class,mappedBy =  "action",cascade  = CascadeType.ALL, orphanRemoval = true)
+	@Column(name = "action_type")
+	private String actionType;
+
+	@OneToOne(targetEntity = Question.class, mappedBy = "action", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Question question;
+
+	@OneToOne(targetEntity = LikedEntity.class, mappedBy = "action", cascade = CascadeType.ALL, orphanRemoval = true)
 	private LikedEntity likedEntity;
+
+	@OneToOne(targetEntity = Answer.class, mappedBy = "action", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Answer answer;
+
+	@OneToOne(targetEntity = CommentEntity.class, mappedBy = "action", cascade = CascadeType.ALL, orphanRemoval = true)
+	private CommentEntity commentEntity;
+	
+	@OneToOne(targetEntity = TagEntity.class, mappedBy = "action", cascade = CascadeType.ALL, orphanRemoval = true)
+	private TagEntity tagEntity;
 
 	public Long getActionId() {
 		return actionId;
+	}
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
+	public Answer getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(Answer answer) {
+		this.answer = answer;
+	}
+
+	public CommentEntity getCommentEntity() {
+		return commentEntity;
+	}
+
+	public void setCommentEntity(CommentEntity commentEntity) {
+		this.commentEntity = commentEntity;
 	}
 
 	public void setActionId(Long actionId) {
@@ -42,6 +84,14 @@ public class ActionEntity implements Serializable {
 
 	public void setLikedEntity(LikedEntity likedEntity) {
 		this.likedEntity = likedEntity;
+	}
+
+	public String getActionType() {
+		return actionType;
+	}
+
+	public void setActionType(String actionType) {
+		this.actionType = actionType;
 	}
 
 }

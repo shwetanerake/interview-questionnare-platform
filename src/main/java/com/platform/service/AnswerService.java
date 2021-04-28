@@ -14,7 +14,8 @@ public class AnswerService {
 	
 
 	public Long createOrUpdate(Answer answer) {
-		return answerRepository.save(answer).getAnswerId();
+		//return answerRepository.save(answer).getAnswerId();
+		return null;
 
 	}
 

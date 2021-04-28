@@ -10,23 +10,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.platform.model.answer.Answer;
 import com.platform.model.company.Company;
-import com.platform.model.tag.Tag;
 import com.platform.model.topic.Topic;
+import com.platform.model.user.social.profile.ActionEntity;
 
 import lombok.Data;
 import lombok.Getter;
@@ -37,7 +36,7 @@ import lombok.Setter;
 @Table(name = "questions")
 @Getter
 @Setter
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+//@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Question implements Serializable {
 
 	/**
@@ -47,8 +46,13 @@ public class Question implements Serializable {
 
 	@Id
 	@Column(name = "question_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long questionId;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@MapsId
+	@JoinColumn(foreignKey = @ForeignKey(name="fk_question_id"), name = "question_id")
+	private ActionEntity action;
 
 	@NotNull
 	@Size(min = 50, max = 500)
@@ -57,12 +61,6 @@ public class Question implements Serializable {
 
 	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Answer> answers;
-
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "question_tags", joinColumns = @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_question_tag_questions_mapping"), name = "question_id"), inverseJoinColumns = @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_question_tag_tags_mapping"), name = "tag_id"),
-			uniqueConstraints = @UniqueConstraint(columnNames = {
-					"question_id", "tag_id"}, name = "question_tags_constraint"))
-	private Set<Tag> tags = new HashSet<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "question_topics_subtopics", joinColumns = @JoinColumn(nullable = false, name = "question_id", foreignKey = @ForeignKey(name = "fk_question_topics_subtopics_question_mapping")), inverseJoinColumns = @JoinColumn(nullable = false, name = "topic_id", foreignKey = @ForeignKey(name = "fk_question_topics_subtopics_topic_mapping")), uniqueConstraints = @UniqueConstraint(columnNames = {
@@ -75,8 +73,23 @@ public class Question implements Serializable {
 					"question_id", "company_id"}, name = "question_company_mapping_constraint"))
 	private Set<Company> companies = new HashSet<>();
 	
-	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<QuestionLike> questionLikes;
+	/*
+	 * @ManyToMany(cascade = CascadeType.ALL)
+	 * 
+	 * @JoinTable(name = "question_tags", joinColumns = @JoinColumn(nullable =
+	 * false, foreignKey = @ForeignKey(name = "fk_question_tag_questions_mapping"),
+	 * name = "question_id"), inverseJoinColumns = @JoinColumn(nullable = false,
+	 * foreignKey = @ForeignKey(name = "fk_question_tag_tags_mapping"), name =
+	 * "tag_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
+	 * "question_id", "tag_id"}, name = "question_tags_constraint")) private
+	 * Set<Tag> tags = new HashSet<>();
+	 */
+	 
+
+	
+	
+	//@OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	//private Set<QuestionLike> questionLikes;
 
 	
 }

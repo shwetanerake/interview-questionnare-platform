@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.platform.model.main.Question;
+import com.platform.model.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,8 +28,10 @@ public class Company {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long companyId;
 	
-	
 	@ManyToMany(mappedBy = "companies")
 	private Set<Question> questions = new HashSet<>();
+	
+	@ManyToMany(mappedBy = "companies")
+	private Set<User> users = new HashSet<>();
 
 }
