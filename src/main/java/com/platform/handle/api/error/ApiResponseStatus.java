@@ -1,18 +1,27 @@
 package com.platform.handle.api.error;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ApiResponseStatus {
 
 	private String message = "success";
+
 	private int exitCode = 0;
-	private String debugMessage = "";
+
+	private String debugMessage = "success";
+
 	private Map<String, Object> resultMap = new HashMap<String, Object>();
+
 	private HttpStatus status = HttpStatus.OK;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	private LocalDateTime timestamp;
 
 	public HttpStatus getStatus() {
 		return status;
@@ -20,10 +29,6 @@ public class ApiResponseStatus {
 
 	public void setStatus(HttpStatus status) {
 		this.status = status;
-	}
-
-	public Map<String, Object> getStatusMap() {
-		return resultMap;
 	}
 
 	public String getDebugMessage() {
@@ -58,16 +63,13 @@ public class ApiResponseStatus {
 		this.exitCode = exitCode;
 	}
 
-	public void setStatusMap(Map<String, Object> resultMap2) {
-		this.resultMap = resultMap2;
-	}
 
 	public ApiResponseStatus() {
-
+		timestamp = LocalDateTime.now();
 	}
 
 	public ApiResponseStatus(Map<String, Object> resultMap) {
-		super();
+		this();
 		this.resultMap = resultMap;
 
 	}
@@ -92,8 +94,8 @@ public class ApiResponseStatus {
 		this.message = "Unexpected error";
 		this.debugMessage = ex.getLocalizedMessage();
 	}
-	
-	public ApiResponseStatus(int exitCode,String  message, HttpStatus status, Throwable ex) {
+
+	public ApiResponseStatus(int exitCode, String message, HttpStatus status, Throwable ex) {
 		this();
 		this.status = status;
 		this.exitCode = exitCode;
