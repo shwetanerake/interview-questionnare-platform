@@ -1,6 +1,7 @@
 package com.platform.model.user.social.profile;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,17 +13,14 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.platform.model.user.User;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "user_comments")
-@Getter
-@Setter
 @EqualsAndHashCode
 @Data
 public class CommentEntity implements Serializable {
@@ -38,6 +36,7 @@ public class CommentEntity implements Serializable {
 	@JoinColumn(nullable = false,foreignKey = @ForeignKey(name = "user_comments_user"),name = "user_id")
 	private User user;
 	
-	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	private LocalDateTime timestamp;
 
 }

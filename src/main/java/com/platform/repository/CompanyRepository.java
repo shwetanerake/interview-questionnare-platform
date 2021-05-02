@@ -11,5 +11,4 @@ import com.platform.model.company.Company;
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 	
 	public Optional<Company> findByName(String name);
-
 }
