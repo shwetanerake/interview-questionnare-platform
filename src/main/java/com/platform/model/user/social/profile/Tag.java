@@ -24,15 +24,15 @@ public class Tag {
 	@Column(name = "tag_name", unique = true)
 	@Size(max = 100)
 	private String tagName;
-	
+
 	@Column(nullable = true, name = "description")
+	@Size(max = 100)
 	private String description;
-	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "tag",cascade = CascadeType.ALL,orphanRemoval = true)
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
 	private TagEntity tagEntity;
-	
-	//@ManyToMany(mappedBy = "tags")
-	//private Set<Question> questions = new HashSet<>();
-	
+
+	// @ManyToMany(mappedBy = "tags")
+	// private Set<Question> questions = new HashSet<>();
 
 }
