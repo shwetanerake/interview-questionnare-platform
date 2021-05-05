@@ -19,7 +19,7 @@ public class ApiResponseStatus {
 	private Map<String, Object> resultMap = new HashMap<String, Object>();
 
 	private HttpStatus status = HttpStatus.OK;
-	
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private LocalDateTime timestamp;
 
@@ -63,7 +63,6 @@ public class ApiResponseStatus {
 		this.exitCode = exitCode;
 	}
 
-
 	public ApiResponseStatus() {
 		timestamp = LocalDateTime.now();
 	}
@@ -101,6 +100,14 @@ public class ApiResponseStatus {
 		this.exitCode = exitCode;
 		this.message = message;
 		this.debugMessage = ex.getLocalizedMessage();
+	}
+
+	public ApiResponseStatus(int exitCode, String message, HttpStatus status) {
+		this();
+		this.status = status;
+		this.exitCode = exitCode;
+		this.message = message;
+		this.debugMessage = message;
 	}
 
 	public ApiResponseStatus(int exitCode, HttpStatus status, String message, Throwable ex) {

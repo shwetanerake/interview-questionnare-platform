@@ -1,5 +1,7 @@
 package com.platform.service;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,15 @@ public class QuestionService {
 
 	public Question findById(Long questionId) {
 		return questionRepository.findById(questionId).get();
+	}
+	
+	public Question createOrUpdate(Question question){
+		return questionRepository.save(question);
+	}
+
+	public Object save(@Valid Question question) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
