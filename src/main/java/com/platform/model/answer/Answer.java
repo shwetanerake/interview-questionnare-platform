@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.platform.model.main.Question;
-import com.platform.model.user.social.profile.ActionEntity;
+import com.platform.model.user.social.profile.UserActionEntity;
 
 @Entity
 @Table(name = "answers")
@@ -36,7 +36,7 @@ public class Answer implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
 	@JoinColumn(foreignKey = @ForeignKey(name="fk_answer_id"), name = "answer_id")
-	private ActionEntity action;
+	private UserActionEntity action;
 
 	@NotNull
 	@Size(min = 50, max = 500)

@@ -14,18 +14,10 @@ import javax.persistence.Table;
 
 import com.platform.model.user.User;
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "tag_entity")
-@Getter
-@Setter
-@EqualsAndHashCode
-@Builder
 @Data
 public class TagEntity implements Serializable {
 
@@ -40,7 +32,7 @@ public class TagEntity implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId("actionId")
 	@JoinColumn(name = "actionId", referencedColumnName = "action_id", insertable = false, updatable = false)
-	private ActionEntity action;
+	private UserActionEntity action;
 	
 	@ManyToOne(fetch =FetchType.LAZY)
 	@JoinColumn(nullable = false,foreignKey = @ForeignKey(name = "tag_entity_user"),name = "user_id")

@@ -35,7 +35,7 @@ public class LikedEntity {
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId("actionId")
 	@JoinColumn(name = "actionId", referencedColumnName = "action_id", insertable = false, updatable = false)
-	private ActionEntity action;
+	private UserActionEntity action;
 
 	
 }

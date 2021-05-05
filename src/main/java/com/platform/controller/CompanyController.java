@@ -37,7 +37,7 @@ public class CompanyController {
 
 		try {
 
-			final Long companyId = companyService.save(company).getCompanyId();
+			final Long companyId = companyService.createOrUpdate(null, company).getCompanyId();
 
 			final Map<String, Object> resultMap = Utility.buildResultMap("company_id", companyId);
 

@@ -30,7 +30,7 @@ public class CommentEntity implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
 	@JoinColumn(name = "comment_no")
-	private ActionEntity action;
+	private UserActionEntity action;
 	
 	@ManyToOne(fetch =FetchType.LAZY)
 	@JoinColumn(nullable = false,foreignKey = @ForeignKey(name = "user_comments_user"),name = "user_id")

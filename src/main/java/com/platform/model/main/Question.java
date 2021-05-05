@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 import com.platform.model.answer.Answer;
 import com.platform.model.company.Company;
 import com.platform.model.topic.Topic;
-import com.platform.model.user.social.profile.ActionEntity;
+import com.platform.model.user.social.profile.UserActionEntity;
 
 import lombok.Data;
 import lombok.Getter;
@@ -52,7 +52,7 @@ public class Question implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
 	@JoinColumn(foreignKey = @ForeignKey(name="fk_question_id"), name = "question_id")
-	private ActionEntity action;
+	private UserActionEntity action;
 
 	@NotNull
 	@Size(min = 50, max = 500)
