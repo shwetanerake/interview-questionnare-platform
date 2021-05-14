@@ -14,8 +14,11 @@ import javax.persistence.Table;
 import com.platform.model.answer.Answer;
 import com.platform.model.main.Question;
 
+import lombok.EqualsAndHashCode;
+
 @Entity
 @Table(name = "user_actions")
+@EqualsAndHashCode
 public class UserActionEntity implements Serializable {
 
 	/**
@@ -45,6 +48,14 @@ public class UserActionEntity implements Serializable {
 	
 	@OneToOne(targetEntity = TagEntity.class, mappedBy = "action", cascade = CascadeType.ALL, orphanRemoval = true)
 	private TagEntity tagEntity;
+
+	public TagEntity getTagEntity() {
+		return tagEntity;
+	}
+
+	public void setTagEntity(TagEntity tagEntity) {
+		this.tagEntity = tagEntity;
+	}
 
 	public Long getActionId() {
 		return actionId;
@@ -93,5 +104,6 @@ public class UserActionEntity implements Serializable {
 	public void setActionType(String actionType) {
 		this.actionType = actionType;
 	}
+
 
 }

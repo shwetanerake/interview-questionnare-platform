@@ -22,7 +22,7 @@ public class UserService {
 		return userRepository.findById(userId).isPresent();
 	}
 
-	private User save(User user) {
+	public User save(User user) {
 		// TODO Auto-generated method stub
 		return userRepository.save(user);
 	}

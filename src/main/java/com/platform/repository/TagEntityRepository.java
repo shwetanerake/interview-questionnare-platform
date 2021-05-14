@@ -9,4 +9,5 @@ import com.platform.model.user.social.profile.TagEntityPk;
 @Repository
 public interface TagEntityRepository extends JpaRepository<TagEntity, TagEntityPk> {
 
+	public TagEntity findByTagEntityPkTagName(String tagName);
 }

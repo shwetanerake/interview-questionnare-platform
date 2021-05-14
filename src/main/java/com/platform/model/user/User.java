@@ -1,7 +1,9 @@
 package com.platform.model.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -24,14 +26,12 @@ import com.platform.model.user.social.profile.LikedEntity;
 import com.platform.model.user.social.profile.TagEntity;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
 @Data
+@EqualsAndHashCode
 public class User implements Serializable {
 
 	@Id
@@ -51,7 +51,7 @@ public class User implements Serializable {
 	@OneToMany(targetEntity = CommentEntity.class, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private Set<CommentEntity> userComments = new HashSet<CommentEntity>();
 	
-	@OneToMany(targetEntity = TagEntity.class, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
-	private Set<TagEntity> userTags = new HashSet<TagEntity>();
+	@OneToMany(targetEntity = TagEntity.class, cascade = {CascadeType.DETACH,CascadeType.PERSIST, CascadeType.REMOVE,CascadeType.REMOVE}, mappedBy = "user", orphanRemoval = true)
+	private List<TagEntity> userTags = new ArrayList<TagEntity>();
 
 }
